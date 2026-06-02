@@ -16,6 +16,8 @@ Interactive Streamlit app to explore financial time series for indices, stocks, 
 - Streamlit, Plotly
 - yfinance (or similar) for public financial data
 
+![Interface](fin_image_1.png)
+
 ## How to run
 
 ```bash
