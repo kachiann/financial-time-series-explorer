@@ -4,7 +4,6 @@ from typing import List, Tuple
 import pandas as pd
 import yfinance as yf
 
-
 DEFAULT_TICKERS: List[str] = [
     "^GSPC",
     "^GDAXI",
@@ -46,7 +45,6 @@ def fetch_prices(
         raise DataFetchError("No data returned from provider.")
 
     # Handle both single-ticker and multi-ticker structures
-    # For your case, 'Price' is the top level, 'Close' is second level.
     if isinstance(data.columns, pd.MultiIndex):
         # First level names like 'Price', 'Volume'
         top_level = data.columns.get_level_values(0)

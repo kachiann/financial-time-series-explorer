@@ -4,7 +4,9 @@ import plotly.graph_objects as go
 
 
 def price_chart(norm_prices: pd.DataFrame) -> go.Figure:
-    df = norm_prices.reset_index().melt(id_vars="date", var_name="ticker", value_name="value")
+    df = norm_prices.reset_index().melt(
+        id_vars="date", var_name="ticker", value_name="value"
+    )
     fig = px.line(
         df,
         x="date",
@@ -17,7 +19,9 @@ def price_chart(norm_prices: pd.DataFrame) -> go.Figure:
 
 
 def cumulative_returns_chart(cum_rets: pd.DataFrame) -> go.Figure:
-    df = cum_rets.reset_index().melt(id_vars="date", var_name="ticker", value_name="value")
+    df = cum_rets.reset_index().melt(
+        id_vars="date", var_name="ticker", value_name="value"
+    )
     fig = px.line(
         df,
         x="date",

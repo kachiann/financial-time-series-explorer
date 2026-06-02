@@ -1,31 +1,30 @@
+from datetime import date, timedelta
 from pathlib import Path
 import sys
+
+import streamlit as st
+
+from src.data import DEFAULT_TICKERS, DataFetchError, fetch_prices
+from src.metrics import (
+    correlation_matrix,
+    cumulative_returns,
+    drawdowns,
+    log_returns,
+    normalize_prices,
+    rolling_volatility,
+)
+from src.plots import (
+    correlation_heatmap,
+    cumulative_returns_chart,
+    drawdown_chart,
+    price_chart,
+    volatility_chart,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.append(str(ROOT))
 
-from datetime import date, timedelta
-
-import pandas as pd
-import streamlit as st
-
-from src.data import DEFAULT_TICKERS, fetch_prices, DataFetchError
-from src.metrics import (
-    normalize_prices,
-    log_returns,
-    cumulative_returns,
-    rolling_volatility,
-    drawdowns,
-    correlation_matrix,
-)
-from src.plots import (
-    price_chart,
-    cumulative_returns_chart,
-    volatility_chart,
-    drawdown_chart,
-    correlation_heatmap,
-)
 
 st.set_page_config(page_title="Financial Time Series Explorer", layout="wide")
 
@@ -36,7 +35,10 @@ def load_prices(tickers, start, end, interval):
 
 
 st.title("Financial Time Series Explorer")
-st.caption("Interactive visualization of prices, returns, volatility, drawdowns, and correlations.")
+st.caption(
+    "Interactive visualization of prices, returns, volatility, "
+    "drawdowns, and correlations."
+)
 
 # Sidebar filters
 st.sidebar.header("Filters")
@@ -58,7 +60,9 @@ tickers = st.sidebar.multiselect(
 )
 
 interval = st.sidebar.selectbox("Frequency", options=["1d", "1wk", "1mo"], index=0)
-window = st.sidebar.slider("Rolling window (days)", min_value=10, max_value=120, value=20, step=5)
+window = st.sidebar.slider(
+    "Rolling window (days)", min_value=10, max_value=120, value=20, step=5
+)
 
 if not tickers:
     st.warning("Select at least one ticker.")
@@ -87,7 +91,9 @@ vol = rolling_volatility(log_rets, window=window)
 dd = drawdowns(prices)
 corr = correlation_matrix(log_rets)
 
-tab1, tab2, tab3, tab4 = st.tabs(["Prices", "Returns & Volatility", "Drawdowns", "Correlation"])
+tab1, tab2, tab3, tab4 = st.tabs(
+    ["Prices", "Returns & Volatility", "Drawdowns", "Correlation"]
+)
 
 with tab1:
     st.plotly_chart(price_chart(norm_prices), use_container_width=True)
