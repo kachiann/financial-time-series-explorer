@@ -19,7 +19,7 @@ Interactive Streamlit app to explore financial time series for indices, stocks, 
 ## How to run
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/kachiann/financial-time-series-explorer
 cd financial-time-series-explorer
 pip install -r requirements.txt
 streamlit run app/streamlit_app.py
